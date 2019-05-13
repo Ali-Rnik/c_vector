@@ -7,35 +7,47 @@ struct vector
 {
 	int *data;
 	int size;
+
+	void (*erase)(struct vector *self, int ind);
+	void (*push)(struct vector *self, int val);
 };
 
-void vec_push(int val, struct vector *vec);
-void vec_erase(int ind, struct vector *vec);
+void init_vec(struct vector **vec);
+void vec_push(struct vector *vec, int val);
+void vec_erase(struct vector *vec, int ind);
 
 int main()
 {
-	int val;
-	struct vector *vec;
-	vec = (struct vector *) malloc(sizeof(struct vector));
-	vec->size = 0;
-
 	freopen("a.in", "r", stdin);
+
+	int val;
+	struct vector *fvec;
+	init_vec(&fvec);
 
 	while (val != 1000) {
 		scanf("%d", &val);
-		vec_push(val, vec);
+		fvec->push(fvec, val);
 	}
 
-	vec_erase(vec->size - 1, vec);
-	vec_erase(1, vec);
-	for (int i = 0; i < vec->size; i++)
-		printf("%d ", vec->data[i]);
+	fvec->erase(fvec, fvec->size - 1);
+	fvec->erase(fvec, 1);
+
+	for (int i = 0; i < fvec->size; i++)
+		printf("%d ", fvec->data[i]);
 }
 
-void vec_push(int val, struct vector *vec)
+void init_vec(struct vector **vec)
+{
+	*vec = (struct vector *) malloc(sizeof(struct vector));
+	(*vec)->size = 0;
+	(*vec)->erase = vec_erase;
+	(*vec)->push = vec_push;
+}
+
+void vec_push(struct vector *vec, int val)
 {
 	vec->data = (int *) reallocarray(vec->data, vec->size + 1, 
-		sizeof(vec->data));
+		sizeof(int));
 	if (vec->data == NULL)
 		perror("Error in vec_push");
 	else {
@@ -44,7 +56,7 @@ void vec_push(int val, struct vector *vec)
 	}
 }
 
-void vec_erase(int ind, struct vector *vec)
+void vec_erase(struct vector *vec, int ind)
 {
 	if (vec->size <= 0 || ind >= vec->size || ind < 0) {
 		printf("Vec_erase() misused\n");
@@ -55,7 +67,7 @@ void vec_erase(int ind, struct vector *vec)
 		vec->data[i] = vec->data[i+1];
 
 	vec->data = (int *) reallocarray(vec->data, vec->size - 1, 
-		sizeof(vec->data));
+		sizeof(int));
 	if (vec->data == NULL)
 		perror("Error in vec_pop");
 	else
