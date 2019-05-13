@@ -1,9 +1,10 @@
-#ifndef C_VECTOR_H
-#define C_VECTOR_H
+#ifndef VECTOR_H
+#define VECTOR_H
 
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
+#include <stdio.h>
 
 struct vector
 {
@@ -18,4 +19,4 @@ void init_vec(struct vector **vec);
 void vec_push(struct vector *vec, int val);
 void vec_erase(struct vector *vec, int ind);
 
-#endif /* C_VECTOR_H */
+#endif /* VECTOR_H */
