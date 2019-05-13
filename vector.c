@@ -27,13 +27,9 @@ void vec_erase(struct vector *vec, int ind)
 		return;
 	}
 
-	for (int i = ind; i < vec->size - 1; i++)
+	vec->size--;
+	for (int i = ind; i < vec->size; i++)
 		vec->data[i] = vec->data[i+1];
 
-	vec->data = (int *) reallocarray(vec->data, vec->size - 1, 
-		sizeof(int));
-	if (vec->data == NULL)
-		perror("Error in vec_pop");
-	else
-		vec->size--;
+	vec->data = (int *) reallocarray(vec->data, vec->size, sizeof(int));
 }
