@@ -1,40 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <string.h>
-
-struct vector
-{
-	int *data;
-	int size;
-
-	void (*erase)(struct vector *self, int ind);
-	void (*push)(struct vector *self, int val);
-};
-
-void init_vec(struct vector **vec);
-void vec_push(struct vector *vec, int val);
-void vec_erase(struct vector *vec, int ind);
-
-int main()
-{
-	freopen("a.in", "r", stdin);
-
-	int val;
-	struct vector *fvec;
-	init_vec(&fvec);
-
-	while (val != 1000) {
-		scanf("%d", &val);
-		fvec->push(fvec, val);
-	}
-
-	fvec->erase(fvec, fvec->size - 1);
-	fvec->erase(fvec, 1);
-
-	for (int i = 0; i < fvec->size; i++)
-		printf("%d ", fvec->data[i]);
-}
+#include "vector.h"
 
 void init_vec(struct vector **vec)
 {
